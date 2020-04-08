@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Role
- * 
+ *
  * @property int $id
  * @property string $name
  * @property bool $manage_users
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $is_teacher
  * @property int $is_admin
  * @property int $created
- * 
+ *
  * @property Collection|User[] $users
  *
  * @package App\Models
@@ -39,9 +39,9 @@ class Role extends Model
 		'manage_theory' => 'bool',
 		'manage_lectures' => 'bool',
 		'manage_classes' => 'bool',
-		'is_student' => 'int',
-		'is_teacher' => 'int',
-		'is_admin' => 'int',
+		'is_student' => 'bool',
+		'is_teacher' => 'bool',
+		'is_admin' => 'bool',
 		'created' => 'int'
 	];
 
