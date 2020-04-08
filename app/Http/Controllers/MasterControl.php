@@ -140,17 +140,35 @@ class MasterControl extends Controller
       "limit"=>"required|numeric|min:1",
       "page"=>"required|numeric",
       "sort"=>"required|numeric|min:0|max:1",
-      "name"=>"alpha_num"
+      "role_id"=>"exists:roles,id|numeric",
+      "name"=>"alpha_num",
     ]);
 
 
-    $data = RoleUser::select("role_users.*","users.name as user_name","roles.name as role")
-    ->join("users","users.id","=","role_users.user_id")
-    ->join("roles","roles.id","=","role_users.role_id")
-    ->where("users.name","like","%".$req->name."%")
-    ->orWhere("roles.name","like","%".$req->name."%")
-    ->orderBy("role_users.created",($this->sort($req->sort)))
-    ->paginate($req->limit);
+
+
+    if ($req->has("role_id")) {
+
+      $data = RoleUser::select("role_users.*","users.name as user_name","roles.name as role")
+      ->join("users","users.id","=","role_users.user_id")
+      ->join("roles","roles.id","=","role_users.role_id")
+      ->where("users.name","like","%".$req->name."%")
+      ->where("roles.id",$req->role_id)
+      ->orderBy("role_users.created",($this->sort($req->sort)))
+      ->paginate($req->limit);
+
+    }else {
+
+      $data = RoleUser::select("role_users.*","users.name as user_name","roles.name as role")
+      ->join("users","users.id","=","role_users.user_id")
+      ->join("roles","roles.id","=","role_users.role_id")
+      ->where("users.name","like","%".$req->name."%")
+      ->orWhere("roles.name","like","%".$req->name."%")
+      ->orderBy("role_users.created",($this->sort($req->sort)))
+      ->paginate($req->limit);
+
+    }
+
 
     return self::returnResponse(200,$data);
 
