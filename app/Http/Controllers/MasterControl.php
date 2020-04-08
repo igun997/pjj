@@ -134,4 +134,102 @@ class MasterControl extends Controller
 
   }
 
+  public function roles_users_read(Request $req)
+  {
+    $this->validate($req,[
+      "limit"=>"required|numeric|min:1",
+      "page"=>"required|numeric",
+      "sort"=>"required|numeric|min:0|max:1",
+      "name"=>"alpha_num"
+    ]);
+
+
+    $data = RoleUser::select("role_users.*","users.name as user_name","roles.name as role")
+    ->join("users","users.id","=","role_users.user_id")
+    ->join("roles","roles.id","=","role_users.role_id")
+    ->where("users.name","like","%".$req->name."%")
+    ->orWhere("roles.name","like","%".$req->name."%")
+    ->orderBy("role_users.created",($this->sort($req->sort)))
+    ->paginate($req->limit);
+
+    return self::returnResponse(200,$data);
+
+  }
+
+  public function roles_users_add(Request $req)
+  {
+
+    $this->validate($req,[
+      "user_id"=>"required|exists:users,id",
+      "role_id"=>"required|exists:roles,id",
+    ]);
+
+    $data = $req->all();
+    $data["created"] = time();
+
+    $save = RoleUser::create($data);
+
+    if ($save) {
+
+      return self::returnResponse(200);
+    }else {
+
+      return self::returnResponse(500);
+    }
+
+
+  }
+
+  public function roles_users_update(Request $req)
+  {
+
+    $this->validate($req,[
+      "id"=>"required|exists:role_users,id",
+      "user_id"=>"required|exists:users,id",
+      "role_id"=>"required|exists:roles,id",
+    ]);
+
+    $data = $req->all();
+
+    unset($data["id"]);
+
+    $find = RoleUser::where(["id"=>$req->id]);
+
+    $update = $find->update($data);
+
+    if ($update) {
+
+      return self::returnResponse(200);
+
+    }else {
+
+      return self::returnResponse(500);
+
+    }
+
+  }
+
+  public function roles_users_delete(Request $req)
+  {
+
+    $this->validate($req,[
+      "id"=>"required|exists:role_users,id",
+    ]);
+
+
+    $find = RoleUser::find($req->id);
+
+    $delete = $find->delete();
+
+    if ($delete) {
+
+      return self::returnResponse(200);
+
+    }else {
+
+      return self::returnResponse(500);
+
+    }
+
+  }
 }

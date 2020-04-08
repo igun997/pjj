@@ -47,6 +47,36 @@ $router->group([
     $router->post('roles', 'MasterControl@roles_add');
     $router->put('roles', 'MasterControl@roles_update');
 
+    $router->get('users', 'MasterControl@users_read');
+    $router->post('users', 'MasterControl@users_add');
+    $router->put('users', 'MasterControl@users_update');
+    $router->delete('users', 'MasterControl@users_delete');
+
+    $router->get('classes', 'MasterControl@classes_read');
+    $router->post('classes', 'MasterControl@classes_add');
+    $router->put('classes', 'MasterControl@classes_update');
+    $router->delete('classes', 'MasterControl@classes_delete');
+
+    $router->get('lectures', 'MasterControl@lectures_read');
+    $router->post('lectures', 'MasterControl@lectures_add');
+    $router->put('lectures', 'MasterControl@lectures_update');
+    $router->delete('lectures', 'MasterControl@lectures_delete');
+
+    $router->get('roles_assign', 'MasterControl@roles_users_read');
+    $router->post('roles_assign', 'MasterControl@roles_users_add');
+    $router->put('roles_assign', 'MasterControl@roles_users_update');
+    $router->delete('roles_assign', 'MasterControl@roles_users_delete');
+
+    $router->get('classes_manager', 'MasterControl@classes_manager_read');
+    $router->post('classes_manager', 'MasterControl@classes_manager_add');
+    $router->put('classes_manager', 'MasterControl@classes_manager_update');
+    $router->delete('classes_manager', 'MasterControl@classes_manager_delete');
+
+    $router->get('lectures_teacher', 'MasterControl@lectures_teacher_read');
+    $router->post('lectures_teacher', 'MasterControl@lectures_teacher_add');
+    $router->put('lectures_teacher', 'MasterControl@lectures_teacher_update');
+    $router->delete('lectures_teacher', 'MasterControl@lectures_teacher_delete');
+
 });
 
 $router->group([
