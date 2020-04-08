@@ -7,11 +7,3 @@ if ( ! function_exists('config_path'))
         return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
     }
 }
-
-if ( ! function_exists('me_with_role'))
-{
-    function me_with_role()
-    {
-      
-    }
-}

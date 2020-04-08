@@ -45,4 +45,9 @@ class Controller extends BaseController
 
   }
 
+  public function FunctionName($value='')
+  {
+    // code...
+  }
+
 }
