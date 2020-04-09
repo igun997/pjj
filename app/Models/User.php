@@ -110,4 +110,6 @@ class User extends Model implements JWTSubject,AuthenticatableContract, Authoriz
 		return $this->belongsToMany(Role::class, 'role_users')
 					->withPivot('id', 'created');
 	}
+
+
 }

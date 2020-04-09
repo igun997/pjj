@@ -21,11 +21,16 @@ class Controller extends BaseController
         $msg = "System Error";
       }elseif ($code == 400) {
         $msg = "Bad Request";
-      }elseif (404) {
+      }elseif ($code == 404) {
         $msg = "Not Found";
       }
 
       return response()->json(["code"=>$code,"data"=>$data,"msg"=>$msg],$code);
+  }
+
+  public function sort(int $sort)
+  {
+    return (($sort == 0)?"asc":"desc");
   }
 
   public static function meWithRole(int $id)
@@ -45,9 +50,6 @@ class Controller extends BaseController
 
   }
 
-  public function FunctionName($value='')
-  {
-    // code...
-  }
+
 
 }
